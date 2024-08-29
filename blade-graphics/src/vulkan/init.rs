@@ -1043,7 +1043,7 @@ impl Drop for super::Context {
                     .core
                     .destroy_semaphore(queue.present_semaphore, None);
             }
-            self.instance.core.destroy_instance(None);
+            //self.instance.core.destroy_instance(None);
         }
     }
 }
