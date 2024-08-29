@@ -1024,6 +1024,7 @@ impl super::Surface {
 impl Drop for super::Context {
     fn drop(&mut self) {
         unsafe {
+            self.device.core.destroy_device(None);
             if let Some(surface_mutex) = self.surface.take() {
                 let mut surface = surface_mutex.into_inner().unwrap();
                 surface.deinit_swapchain(&self.device.core);
@@ -1034,7 +1035,6 @@ impl Drop for super::Context {
                     surface_instance.destroy_surface(surface.raw, None);
                 }
             }
-            self.device.core.destroy_device(None);
             self.instance.core.destroy_instance(None);
             if let Ok(queue) = self.queue.lock() {
                 self.device
